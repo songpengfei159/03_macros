@@ -24,3 +24,13 @@ macro_rules!  my_try{
         } 
     };
 }
+
+#[macro_export]
+macro_rules! my_ready {
+    ($expr:expr) => {
+        match $expr {
+            std::task::Poll::Ready(v) => std::task::Poll::Ready(v),
+            std::task::Poll::Pending => return std::task::Poll::Pending,
+        } 
+    };
+}
